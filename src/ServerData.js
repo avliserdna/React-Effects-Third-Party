@@ -1,5 +1,32 @@
+import { useEffect, useState } from "react";
+
 const ServerData = () => {
-  return <h1>No Data To Display</h1>;
+  const [serverData, setServerData] = useState([]);
+  useEffect(() => {
+    const fetchFortnite = async () => {
+      const data = await fetch("https://fortnite-api.com/v2/news");
+      const response = await data.json();
+      console.log(response);
+      const { motds } = response.data.br;
+      setServerData(motds);
+      console.log(serverData, "<== Before Fetch'd Fortnite");
+    };
+    fetchFortnite();
+  }, []);
+
+  if (!serverData.length) return <h1>No Data To Display</h1>;
+  console.log(serverData, "<== ServerData");
+  return (
+    <div>
+      {serverData.map((data) => (
+        <div className="serverContainer" key={data.id}>
+          <h1 className="title">{data.title}</h1>
+          <h2 className="body">{data.body}</h2>
+          <img className="img" src={data.image} alt={data.title} />
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default ServerData;

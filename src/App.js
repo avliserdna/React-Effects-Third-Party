@@ -1,4 +1,4 @@
-import ServerData from './ServerData';
+import ServerData from "./ServerData";
 
 const App = () => {
   return <ServerData />;
